@@ -1,3 +1,5 @@
+![logo.png](logo.png)
+
 # Hytale KeepItem mod
 
 This mods allows players to select which items they want to prevent to be moved during a Quick Stack operation.
