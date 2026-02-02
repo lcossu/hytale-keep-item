@@ -33,7 +33,7 @@ public class KeepItemPage extends ChoiceBasePage {
         } else {
             commandBuilder.append(this.getPageLayout());
             commandBuilder.clear("#ElementList");
-            commandBuilder.appendInline("#ElementList", "Label { Text: No items in inventory; Style: (Alignment: Center); }");
+            commandBuilder.appendInline("#ElementList", "Label { Text: \"No items in inventory\"; Style: (Alignment: Center); }");
         }
     }
 

@@ -4,6 +4,7 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.Page;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
+import com.hypixel.hytale.server.core.command.system.CommandSender;
 import com.hypixel.hytale.server.core.command.system.arguments.system.FlagArg;
 import com.hypixel.hytale.server.core.command.system.basecommands.AbstractPlayerCommand;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -22,6 +23,13 @@ public class KeepItemCommand extends AbstractPlayerCommand {
     public KeepItemCommand() {
         super("keepItem", "With this command you can open the UI to choose which items should not be moved during quick stack.", false);
         clear = this.withFlagArg("clear", "Clears all keep item settings.");
+        addAliases("ki", "keepitems", "kp");
+    }
+
+    @Override
+    public boolean hasPermission(@NonNullDecl CommandSender sender) {
+        // Every player can use this command
+        return true;
     }
 
     @Override
