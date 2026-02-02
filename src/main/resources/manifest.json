@@ -1,7 +1,7 @@
 {
     "Group": "com.wasd94",
     "Name": "KeepItem",
-    "Version": "1.0.0",
+    "Version": "1.0.1",
     "Description": "A simple mod that allows to select with items to prevent to be moved upon QuickStacking",
     "Authors": [
         {
