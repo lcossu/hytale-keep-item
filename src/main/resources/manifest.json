@@ -1,14 +1,14 @@
 {
-    "Group": "com.wasd94",
+    "Group": "wasd94",
     "Name": "KeepItem",
-    "Version": "1.0.1",
+    "Version": "1.0.2",
     "Description": "A simple mod that allows to select with items to prevent to be moved upon QuickStacking",
     "Authors": [
         {
             "Name": "wasd94"
         }
     ],
-    "Website": "example.org",
+    "Website": "https://www.curseforge.com/hytale/mods/keep-item",
     "ServerVersion": "*",
     "Dependencies": {
         

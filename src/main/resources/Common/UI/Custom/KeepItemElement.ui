@@ -17,16 +17,17 @@ Button #Button {
     FlexWeight: 1;
   }
 
+  Label #Selected{
+    Padding: (Horizontal: 10, Vertical: 5);
+    Style: (TextColor: #00ff00(0.8));
+  }
+
   Label #Detail {
     Padding: (Horizontal: 5, Vertical: 5);
     Style: (TextColor: #ffffff(0.6));
   }
 
 
-  Label #Selected{
-    Padding: (Horizontal: 10, Vertical: 5);
-    Style: (TextColor: #00ff00(0.8));
-  }
   
   Group {
     LayoutMode: Full;
