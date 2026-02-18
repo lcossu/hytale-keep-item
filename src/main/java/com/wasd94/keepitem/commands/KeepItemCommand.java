@@ -3,6 +3,7 @@ package com.wasd94.keepitem.commands;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.packets.interface_.Page;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.CommandSender;
 import com.hypixel.hytale.server.core.command.system.arguments.system.FlagArg;
@@ -19,10 +20,12 @@ import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
 
 public class KeepItemCommand extends AbstractPlayerCommand {
     private final FlagArg clear;
+    private final FlagArg print;
 
     public KeepItemCommand() {
         super("keepItem", "With this command you can open the UI to choose which items should not be moved during quick stack.", false);
         clear = this.withFlagArg("clear", "Clears all keep item settings.");
+        print = this.withFlagArg("dump", "Print all keep item settings.");
         addAliases("ki", "keepitems", "kp");
     }
 
@@ -40,7 +43,22 @@ public class KeepItemCommand extends AbstractPlayerCommand {
         if (player == null) return;
         Inventory inventory = player.getInventory();
         if (inventory == null) return;
-        if (!clear.get(commandContext)) {
+        if (clear.get(commandContext)) {
+            KeepItemMapComponent keepItemMapComponent = store.getComponent(ref, KeepItemMapComponent.getComponentType());
+            if (keepItemMapComponent != null) {
+                keepItemMapComponent.getKeepItemMap().clear();
+                store.putComponent(ref, KeepItemMapComponent.getComponentType(), keepItemMapComponent);
+                LOGGER.atInfo().log("Cleared KeepItemMapComponent for player " + playerRef.getUsername());
+                commandContext.sendMessage(Message.raw("Cleared all keep item settings."));
+            }
+        } else if (print.get(commandContext)) {
+            KeepItemMapComponent keepItemMapComponent = store.getComponent(ref, KeepItemMapComponent.getComponentType());
+            if (keepItemMapComponent != null) {
+                commandContext.sendMessage(Message.raw("Current keep item settings: " + keepItemMapComponent.getKeepItemMap().toString()));
+            } else {
+                commandContext.sendMessage(Message.raw("No keep item settings found."));
+            }
+        } else {
             if (player.getPageManager().getCustomPage() == null) {
                 KeepItemMapComponent keepItemMapComponent = store.getComponent(ref, KeepItemMapComponent.getComponentType());
                 if (keepItemMapComponent == null) {
@@ -51,13 +69,7 @@ public class KeepItemCommand extends AbstractPlayerCommand {
             } else {
                 player.getPageManager().setPage(ref, store, Page.None);
             }
-        } else {
-            KeepItemMapComponent keepItemMapComponent = store.getComponent(ref, KeepItemMapComponent.getComponentType());
-            if (keepItemMapComponent != null) {
-                keepItemMapComponent.getKeepItemMap().clear();
-                store.putComponent(ref, KeepItemMapComponent.getComponentType(), keepItemMapComponent);
-                LOGGER.atInfo().log("Cleared KeepItemMapComponent for player " + playerRef.getUsername());
-            }
+
         }
     }
 }
