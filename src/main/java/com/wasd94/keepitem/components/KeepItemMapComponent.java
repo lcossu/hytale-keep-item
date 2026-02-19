@@ -40,6 +40,10 @@ public class KeepItemMapComponent implements Component<EntityStore> {
     }
 
     public void setKeepItemMapElement(String keepItemMapID, Boolean value) {
+        if (!value){
+            this.keepItemMap.remove(keepItemMapID);
+            return;
+        }
         this.keepItemMap.put(keepItemMapID, value);
     }
 
