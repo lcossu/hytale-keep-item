@@ -56,6 +56,7 @@ public class InventoryChangeKeepItemHandler {
 
         } else {
             KeepItem.LOGGER.atInfo().log("Ignoring transaction of type " + event.getTransaction().getClass().getSimpleName() + " for inventory " + (isHotBar ? "hotbar" : "storage") + " change.");
+            inventoryChangeEventCount = 0;
         }
 
 
@@ -80,6 +81,7 @@ public class InventoryChangeKeepItemHandler {
                 return;
             }
             moveTransaction.getOtherContainer().removeItemStack(previousSlotTransaction.getSlotAfter());
+            moveTransaction.getOtherContainer().removeItemStackFromSlot(previousSlotTransaction.getSlot(), movedItems.getQuantity());
             inventoryChangeEventCount++;
 
             KeepItem.LOGGER.atInfo().log("Stopped quick stacking of " + movedItems.getItemId() + " in slot " + removeTransaction.getSlot() + (isHotBar ? " (hotbar)" : " (storage)") + " due to keep item setting.");
@@ -87,7 +89,7 @@ public class InventoryChangeKeepItemHandler {
             KeepItem.LOGGER.atInfo().log("Allowed quick stacking of " + movedItems.getItemId() + " in slot " + removeTransaction.getSlot() + (isHotBar ? " (hotbar)" : " (storage)") + " due to no keep item setting.");
             if (inventoryChangeEventCount > 0) {
                 ItemStackTransaction addTransaction = (ItemStackTransaction) moveTransaction.getAddTransaction();
-                moveTransaction.getOtherContainer().setItemStackForSlot(addTransaction.getSlotTransactions().getLast().getSlot(), movedItems);
+                moveTransaction.getOtherContainer().addItemStackToSlot(addTransaction.getSlotTransactions().getLast().getSlot(), movedItems);
                 inventoryChangeEventCount--;
             }
         }
